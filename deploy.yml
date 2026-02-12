@@ -1,0 +1,27 @@
+---
+- name: Deploy website
+  hosts: web
+  become: yes
+
+  tasks:
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Start Apache
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Copy index.html
+      copy:
+        src: html-repo/index.html
+        dest: /var/www/html/index.html
+
+    - name: Copy error.html
+      copy:
+        src: html-repo/error.html
+        dest: /var/www/html/error.html
